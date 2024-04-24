@@ -74,7 +74,7 @@ const Header = () => {
         >
           <Box>
             <Link href="/">
-              <Image src="/logo.png" width={120} height={30} alt="logo" />
+              <Image src="/logo.png" width={120} height={50} alt="logo" />
             </Link>
           </Box>
           {user.isFetched && (
