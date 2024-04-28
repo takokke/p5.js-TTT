@@ -47,10 +47,12 @@ const CurrentArticlesEdit: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleChangePreviewChecked = () => {
+    //プレビュー状態を反転させる
     setPreviewChecked(!previewChecked)
   }
 
   const handleChangeStatusChecked = () => {
+    //記事の公開状態を反転させる
     setStatusChecked(!statusChecked)
   }
 
@@ -152,12 +154,12 @@ const CurrentArticlesEdit: NextPage = () => {
     <Box
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ backgroundColor: '#EDF2F7', minHeight: '100vh' }}
+      sx={{ backgroundColor: '#ebe1d1', minHeight: '100vh' }}
     >
       <AppBar
         position="fixed"
         sx={{
-          backgroundColor: '#EDF2F7',
+          backgroundColor: '#ebe1d1',
         }}
       >
         <Toolbar
@@ -186,6 +188,7 @@ const CurrentArticlesEdit: NextPage = () => {
               <Switch
                 checked={previewChecked}
                 onChange={handleChangePreviewChecked}
+                color="secondary"
               />
               <Typography sx={{ fontSize: { xs: 12, sm: 15 } }}>
                 プレビュー表示
@@ -195,6 +198,7 @@ const CurrentArticlesEdit: NextPage = () => {
               <Switch
                 checked={statusChecked}
                 onChange={handleChangeStatusChecked}
+                color="secondary"
               />
               <Typography sx={{ fontSize: { xs: 12, sm: 15 } }}>
                 下書き／公開
@@ -203,6 +207,7 @@ const CurrentArticlesEdit: NextPage = () => {
             <LoadingButton
               variant="contained"
               type="submit"
+              color="secondary"
               loading={isLoading}
               sx={{
                 color: 'white',
@@ -229,9 +234,10 @@ const CurrentArticlesEdit: NextPage = () => {
                   <TextField
                     {...field}
                     type="text"
+                    color="secondary"
                     error={fieldState.invalid}
                     helperText={fieldState.error?.message}
-                    placeholder="Write in Title"
+                    placeholder="タイトル"
                     fullWidth
                     sx={{ backgroundColor: 'white' }}
                   />
@@ -246,11 +252,12 @@ const CurrentArticlesEdit: NextPage = () => {
                   <TextField
                     {...field}
                     type="textarea"
+                    color="secondary"
                     error={fieldState.invalid}
                     helperText={fieldState.error?.message}
                     multiline
                     fullWidth
-                    placeholder="Write in Markdown Text"
+                    placeholder="マークダウン記法で編集しよう"
                     rows={25}
                     sx={{ backgroundColor: 'white' }}
                   />

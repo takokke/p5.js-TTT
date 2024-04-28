@@ -85,7 +85,7 @@ const SignUp: NextPage = () => {
     <Box
       css={styles.pageMinHeight}
       sx={{
-        backgroundColor: '#EDF2F7',
+        backgroundColor: '#ebe1d1',
       }}
     >
       <Container maxWidth="sm">
@@ -94,7 +94,7 @@ const SignUp: NextPage = () => {
             component="h2"
             sx={{ fontSize: 32, color: 'black', fontWeight: 'bold' }}
           >
-            Sign Up
+            編集者登録
           </Typography>
         </Box>
         <Stack
@@ -110,6 +110,7 @@ const SignUp: NextPage = () => {
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
+                color="secondary"
                 type="text"
                 label="メールアドレス"
                 error={fieldState.invalid}
@@ -125,6 +126,7 @@ const SignUp: NextPage = () => {
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
+                color="secondary"
                 type="password"
                 label="パスワード"
                 error={fieldState.invalid}
@@ -142,6 +144,7 @@ const SignUp: NextPage = () => {
                 {...field}
                 type="text"
                 label="ユーザー名"
+                color="secondary"
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message}
                 sx={{ backgroundColor: 'white' }}
@@ -149,6 +152,7 @@ const SignUp: NextPage = () => {
             )}
           />
           <LoadingButton
+            color="secondary"
             variant="contained"
             type="submit"
             loading={isLoading}

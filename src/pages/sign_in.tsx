@@ -67,7 +67,7 @@ const SignIn: NextPage = () => {
   return (
     <Box
       sx={{
-        backgroundColor: '#EDF2F7',
+        backgroundColor: '#ebe1d1',
         minHeight: 'calc(100vh - 57px)',
       }}
     >
@@ -77,10 +77,10 @@ const SignIn: NextPage = () => {
             component="h2"
             sx={{ fontSize: 32, color: 'black', fontWeight: 'bold' }}
           >
-            Sign in
+            ログイン
           </Typography>
         </Box>
-        <Stack component="form" onSubmit={handleSubmit(onSubmit)} spacing={4}>
+        <Stack component="form" onSubmit={handleSubmit(onSubmit)} spacing={5}>
           <Controller
             name="email"
             control={control}
@@ -88,6 +88,7 @@ const SignIn: NextPage = () => {
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
+                color="secondary"
                 type="text"
                 label="メールアドレス"
                 error={fieldState.invalid}
@@ -103,6 +104,7 @@ const SignIn: NextPage = () => {
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
+                color="secondary"
                 type="password"
                 label="パスワード"
                 error={fieldState.invalid}
@@ -114,6 +116,7 @@ const SignIn: NextPage = () => {
           <LoadingButton
             variant="contained"
             type="submit"
+            color="secondary"
             loading={isLoading}
             sx={{ fontWeight: 'bold', color: 'white' }}
           >

@@ -37,13 +37,12 @@ const ArticleDetail: NextPage = () => {
   const { data, error } = useSWR(id ? url + id : null, fetcher)
   if (error) return <Error />
   if (!data) return <Loading />
-
   const article: ArticleProps = camelcaseKeys(data)
 
   return (
     <Box
       sx={{
-        backgroundColor: '#EDF2F7',
+        backgroundColor: '#ebe1d1',
         pb: 6,
         minHeight: 'calc(100vh - 57px)',
       }}

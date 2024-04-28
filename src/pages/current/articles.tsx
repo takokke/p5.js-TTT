@@ -108,10 +108,10 @@ const CurrentArticles: NextPage = () => {
                         display: 'inline',
                         fontSize: 12,
                         textAlgin: 'center',
-                        border: '1px solid #3EA8FF',
+                        border: '1px solid #19857b',
                         p: '4px',
                         borderRadius: 1,
-                        color: '#3EA8FF',
+                        color: '#19857b',
                         fontWeight: 'bold',
                       }}
                     >

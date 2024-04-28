@@ -74,7 +74,12 @@ const Header = () => {
         >
           <Box>
             <Link href="/">
-              <Image src="/logo.png" width={120} height={50} alt="logo" />
+              <Image
+                src="/logo_transparent.png"
+                width={150}
+                height={60}
+                alt="logo"
+              />
             </Link>
           </Box>
           {user.isFetched && (
@@ -83,7 +88,7 @@ const Header = () => {
                 <Box>
                   <Link href="/sign_in">
                     <Button
-                      color="primary"
+                      color="secondary"
                       variant="contained"
                       sx={{
                         color: 'white',
@@ -93,12 +98,12 @@ const Header = () => {
                         boxShadow: 'none',
                       }}
                     >
-                      Sign in
+                      ログイン
                     </Button>
                   </Link>
                   <Link href="/sign_up">
                     <Button
-                      color="primary"
+                      color="secondary"
                       variant="outlined"
                       sx={{
                         textTransform: 'none',
@@ -106,11 +111,11 @@ const Header = () => {
                         lineHeight: '27px',
                         borderRadius: 2,
                         boxShadow: 'none',
-                        border: '1.5px solid #3EA8FF',
+                        border: '1px solid #19857b',
                         ml: 2,
                       }}
                     >
-                      Sign Up
+                      編集者登録
                     </Button>
                   </Link>
                 </Box>
@@ -124,7 +129,7 @@ const Header = () => {
                   </IconButton>
                   <Box sx={{ ml: 2 }}>
                     <Button
-                      color="primary"
+                      color="secondary"
                       variant="contained"
                       sx={{
                         color: 'white',
@@ -136,7 +141,7 @@ const Header = () => {
                       }}
                       onClick={addNewArticle}
                     >
-                      Add new
+                      教材作成
                     </Button>
                   </Box>
                   <Menu
