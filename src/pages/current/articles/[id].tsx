@@ -52,7 +52,7 @@ const CurrentArticleDetail: NextPage = () => {
     <Box
       css={styles.pageMinHeight}
       sx={{
-        backgroundColor: '#EDF2F7',
+        backgroundColor: '#ebe1d1',
         pb: 6,
       }}
     >

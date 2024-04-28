@@ -1,4 +1,12 @@
-import { Box, Card, CardContent, Typography } from '@mui/material'
+import PersonIcon from '@mui/icons-material/Person'
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  IconButton,
+  Typography,
+} from '@mui/material'
 
 type ArticleCardProps = {
   id: number
@@ -27,7 +35,20 @@ const ArticleCard = (props: ArticleCardProps) => {
           {omit(props.title)(45)('...')}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography sx={{ fontSize: 12 }}>{props.userName}</Typography>
+          <Typography sx={{ fontSize: 12 }}>
+            <IconButton sx={{ p: 0, mr: 2 }}>
+              <Avatar
+                sx={{
+                  height: '30px',
+                  width: '30px',
+                  backgroundColor: '#b59259',
+                }}
+              >
+                <PersonIcon />
+              </Avatar>
+            </IconButton>
+            {props.userName}
+          </Typography>
           <Typography sx={{ fontSize: 12 }}>{props.fromToday}</Typography>
         </Box>
       </CardContent>

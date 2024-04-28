@@ -96,6 +96,7 @@ const Header = () => {
                         fontSize: 16,
                         borderRadius: 2,
                         boxShadow: 'none',
+                        fontWeight: 'bold',
                       }}
                     >
                       ログイン
@@ -112,6 +113,7 @@ const Header = () => {
                         borderRadius: 2,
                         boxShadow: 'none',
                         border: '1px solid #19857b',
+                        fontWeight: 'bold',
                         ml: 2,
                       }}
                     >
@@ -123,7 +125,7 @@ const Header = () => {
               {user.isSignedIn && (
                 <Box sx={{ display: 'flex' }}>
                   <IconButton onClick={handleClick} sx={{ p: 0 }}>
-                    <Avatar>
+                    <Avatar sx={{ backgroundColor: '#b59259' }}>
                       <PersonIcon />
                     </Avatar>
                   </IconButton>
@@ -137,6 +139,7 @@ const Header = () => {
                         fontSize: 16,
                         borderRadius: 2,
                         width: 100,
+                        fontWeight: 'bold',
                         boxShadow: 'none',
                       }}
                       onClick={addNewArticle}
