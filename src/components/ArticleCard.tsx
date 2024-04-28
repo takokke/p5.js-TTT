@@ -12,14 +12,14 @@ const omit = (text: string) => (len: number) => (ellipsis: string) =>
 
 const ArticleCard = (props: ArticleCardProps) => {
   return (
-    <Card>
+    <Card sx={{ borderRadius: '8px', color: '#54391f' }}>
       <CardContent>
         <Typography
           component="h3"
           sx={{
             mb: 2,
             minHeight: 48,
-            fontSize: 16,
+            fontSize: 22,
             fontWeight: 'bold',
             lineHeight: 1.5,
           }}

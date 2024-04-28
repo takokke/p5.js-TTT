@@ -71,7 +71,7 @@ const SignUp: NextPage = () => {
         .catch((e: AxiosError<{ error: string }>) => {
           console.log(e.message)
           setSnackbar({
-            message: '不正なユーザー情報です',
+            message: 'メールアドレス認証が未完了です',
             severity: 'error',
             pathname: '/sign_up',
           })

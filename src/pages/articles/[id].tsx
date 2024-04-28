@@ -124,7 +124,7 @@ const ArticleDetail: NextPage = () => {
             }}
           >
             <Card sx={{ boxShadow: 'none', borderRadius: '12px' }}>
-              <List sx={{ color: '#6e7b85' }}>
+              <List sx={{ color: '#b59259' }}>
                 <ListItem divider>
                   <Box
                     sx={{

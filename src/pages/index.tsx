@@ -39,9 +39,15 @@ const Index: NextPage = () => {
   return (
     <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#fff2da' }}>
       <Container maxWidth="md" sx={{ pt: 6 }}>
-        <Grid container spacing={4}>
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          spacing={5}
+        >
           {articles.map((article: ArticleProps, i: number) => (
-            <Grid key={i} item xs={12} md={6}>
+            <Grid key={i} item xs={12} md={10}>
               <Link href={'/articles/' + article.id}>
                 <ArticleCard
                   id={article.id}

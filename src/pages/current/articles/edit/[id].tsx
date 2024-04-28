@@ -85,6 +85,7 @@ const CurrentArticlesEdit: NextPage = () => {
   useEffect(() => {
     if (data) {
       reset(article)
+      // article.statusが公開中のとき、statusCheckedにtrueを入れる
       setStatusChecked(article.status == '公開中')
       setIsFetched(true)
     }
