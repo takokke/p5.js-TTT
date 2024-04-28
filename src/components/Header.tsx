@@ -76,7 +76,7 @@ const Header = () => {
             <Link href="/">
               <Image
                 src="/logo_transparent.png"
-                width={150}
+                width={120}
                 height={60}
                 alt="logo"
               />
@@ -93,8 +93,9 @@ const Header = () => {
                       sx={{
                         color: 'white',
                         textTransform: 'none',
-                        fontSize: 16,
-                        borderRadius: 2,
+                        fontSize: { xs: '13px', sm: '16px' },
+                        borderRadius: { xs: 1, sm: 2 },
+                        lineHeight: { xs: '10px', sm: '27px' },
                         boxShadow: 'none',
                         fontWeight: 'bold',
                       }}
@@ -108,13 +109,13 @@ const Header = () => {
                       variant="outlined"
                       sx={{
                         textTransform: 'none',
-                        fontSize: 16,
-                        lineHeight: '27px',
-                        borderRadius: 2,
+                        fontSize: { xs: '13px', sm: '16px' },
+                        lineHeight: { xs: '10px', sm: '27px' },
+                        borderRadius: { xs: 1, sm: 2 },
                         boxShadow: 'none',
                         border: '1px solid #19857b',
                         fontWeight: 'bold',
-                        ml: 2,
+                        ml: { xs: 1, sm: 2 },
                       }}
                     >
                       編集者登録
