@@ -24,7 +24,6 @@ const Index: NextPage = () => {
   const router = useRouter()
   const page = 'page' in router.query ? Number(router.query.page) : 1
   const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/articles/?page=' + page
-  console.log(url)
   const { data, error } = useSWR(url, fetcher)
   if (error) return <Error />
   if (!data) return <Loading />
