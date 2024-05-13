@@ -81,10 +81,13 @@ const CurrentArticlesEdit: NextPage = () => {
   const { handleSubmit, control, reset, watch } = useForm<ArticleFormData>({
     defaultValues: article,
   })
-
+  // useEffectはページ遷移でも、実行される
   useEffect(() => {
     if (data) {
-      reset(article)
+      if (article.status != '未保存') {
+        // フォームの状態を初期化する
+        reset(article)
+      }
       // article.statusが公開中のとき、statusCheckedにtrueを入れる
       setStatusChecked(article.status == '公開中')
       setIsFetched(true)
