@@ -4,7 +4,7 @@ import TimelineContent from '@mui/lab/TimelineContent'
 import TimelineDot from '@mui/lab/TimelineDot'
 import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem'
 import TimelineSeparator from '@mui/lab/TimelineSeparator'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 type TableOfContentsProps = {
   toc: { id: string; text: string }[]
@@ -13,6 +13,37 @@ type TableOfContentsProps = {
 // 目次コンポーネント
 export const TableOfContents = (props: TableOfContentsProps) => {
   const { toc } = props
+  const [activeId, setActiveId] = useState<string | null>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id)
+          }
+        })
+      },
+      { threshold: 0.1 },
+    )
+
+    toc.forEach((item) => {
+      const element = document.getElementById(item.id)
+      if (element) {
+        observer.observe(element)
+      }
+    })
+
+    return () => {
+      toc.forEach((item) => {
+        const element = document.getElementById(item.id)
+        if (element) {
+          observer.unobserve(element)
+        }
+      })
+    }
+  }, [toc])
+
   return (
     <div>
       <p
@@ -38,8 +69,13 @@ export const TableOfContents = (props: TableOfContentsProps) => {
             }}
           >
             <TimelineSeparator>
-              <TimelineDot />
-              {/* indexがtocの最後の要素の場合はTimelineConnectorを表示しない */}
+              <TimelineDot
+                sx={{
+                  backgroundColor: activeId === data.id ? '#ff9800' : undefined,
+                  border:
+                    activeId === data.id ? '2px solid #bdbdbd' : undefined,
+                }}
+              />
               {i !== toc.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
             <TimelineContent sx={{ color: '#65717b', fontWeight: 'bold' }}>
