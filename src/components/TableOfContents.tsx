@@ -15,6 +15,7 @@ export const TableOfContents = (props: TableOfContentsProps) => {
   const { toc } = props
   const [activeId, setActiveId] = useState<string | null>(null)
 
+  //見出しと目次の連携、強調
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -71,7 +72,7 @@ export const TableOfContents = (props: TableOfContentsProps) => {
             <TimelineSeparator>
               <TimelineDot
                 sx={{
-                  backgroundColor: activeId === data.id ? '#ff9800' : undefined,
+                  backgroundColor: activeId === data.id ? '#ff5e00' : undefined,
                   border:
                     activeId === data.id ? '2px solid #bdbdbd' : undefined,
                 }}
