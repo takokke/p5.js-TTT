@@ -38,10 +38,28 @@ interface Content {
   id: string
 }
 
+class DateStr {
+  created_at: Date
+
+  constructor(date: Date) {
+    this.created_at = date
+  }
+
+  formatDate(): string {
+    const year = this.created_at.getFullYear()
+    const month = ('0' + (this.created_at.getMonth() + 1)).slice(-2)
+    const day = ('0' + this.created_at.getDate()).slice(-2)
+
+    return `${year}/${month}/${day}`
+  }
+}
+
 const ArticleDetail: NextPage<Props> = (props) => {
   const { article, error } = props
   if (error) return <Error />
   const toc = renderToc(article.content)
+  const createdDate = new DateStr(new Date(article.createdAt))
+  const updatedDate = new DateStr(new Date(article.updatedAt))
 
   return (
     <Box
@@ -166,7 +184,7 @@ const ArticleDetail: NextPage<Props> = (props) => {
                         <ListItemText primary="公開" />
                       </Box>
                       <Box>
-                        <ListItemText primary={article.createdAt} />
+                        <ListItemText primary={createdDate.formatDate()} />
                       </Box>
                     </Box>
                   </ListItem>
@@ -186,7 +204,7 @@ const ArticleDetail: NextPage<Props> = (props) => {
                         <ListItemText primary="本文更新" />
                       </Box>
                       <Box>
-                        <ListItemText primary={article.updatedAt} />
+                        <ListItemText primary={updatedDate.formatDate()} />
                       </Box>
                     </Box>
                   </ListItem>
