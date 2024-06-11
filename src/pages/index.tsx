@@ -1,13 +1,14 @@
 import { Box, Grid, Container, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { GetServerSideProps } from 'next'
 import Link from 'next/link'
+import useSWR from 'swr'
 import ArticleCard from '@/components/ArticleCard'
 import CourseCard from '@/components/CourseCard'
 import Error from '@/components/Error'
+import Loading from '@/components/Loading'
 import StyledLink from '@/components/StyledLink'
-import { client } from '@/libs/client'
 import { styles } from '@/styles'
+import { fetcher } from '@/utils'
 
 //記事と講座の二つに分け
 type Article = {
@@ -29,16 +30,22 @@ type Course = {
   }
 }
 
-type SSRProps = {
-  articles: Article[]
-  courses: Course[]
-  error: boolean
-}
+const Index: NextPage = () => {
+  const url1 =
+    process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL +
+    '/articles?offset=0,limit=10'
+  const { data: articlesData, error: articlesError } = useSWR(url1, fetcher)
 
-const Index: NextPage<SSRProps> = (props) => {
-  const { courses, articles, error } = props
+  const url2 =
+    process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL + '/courses?offset=0,limit=10'
+  const { data: coursesData, error: coursesError } = useSWR(url2, fetcher)
 
-  if (error) return <Error />
+  if (articlesError || coursesError) return <Error />
+  if (!articlesData || !coursesData) return <Loading />
+
+  const articles = articlesData.contents
+  const courses = coursesData.contents
+
   return (
     <Box css={styles.pageMinHeight}>
       <Box sx={{ backgroundColor: '#fff2da' }}>
@@ -112,34 +119,4 @@ const Index: NextPage<SSRProps> = (props) => {
     </Box>
   )
 }
-
-export const getServerSideProps: GetServerSideProps<SSRProps> = async () => {
-  try {
-    const data1 = await client.get({
-      endpoint: 'articles',
-      queries: { offset: 0, limit: 10 },
-    })
-    const data2 = await client.get({
-      endpoint: 'courses',
-      queries: { offset: 0, limit: 10 },
-    })
-    return {
-      props: {
-        articles: data1.contents,
-        courses: data2.contents,
-        error: false,
-      },
-    }
-  } catch (error) {
-    console.error('データの取得に失敗しました:', error)
-    return {
-      props: {
-        articles: [],
-        courses: [],
-        error: true,
-      },
-    }
-  }
-}
-
 export default Index

@@ -5,7 +5,7 @@ export const fetcher = (url: string) =>
     .get(url, {
       headers: {
         'Content-type': 'application/json',
-        'X-MICROCMS-API-KEY ': 'veGm3RYpGm8OzpiupVFeDtECpN1gzfsS6B5P',
+        'X-MICROCMS-API-KEY ': process.env.NEXT_PUBLIC_API_KEY,
       },
     })
     .then((res: AxiosResponse) => res.data)

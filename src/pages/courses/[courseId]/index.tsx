@@ -2,11 +2,13 @@
 //章一覧が表示される
 import { Box, Grid, Container, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { GetServerSideProps } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
 import Error from '@/components/Error'
-import { client } from '@/libs/client'
+import Loading from '@/components/Loading'
 import { styles } from '@/styles'
+import { fetcher } from '@/utils'
 
 type Course = {
   id: string
@@ -24,17 +26,28 @@ type Chapter = {
   updatedAt: string
 }
 
-type SSRProps = {
-  chapters: Chapter[]
-  error: boolean
-}
-
 // 講座一覧画面
-const Index: NextPage<SSRProps> = (props) => {
-  const { chapters, error } = props
-  const courseId = chapters[0].courseId
+const Index: NextPage = () => {
+  const router = useRouter()
+  const url1 =
+    process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL +
+    '/chapters?filters=courseId[equals]'
+  const { courseId } = router.query
+  const { data: chaptersData, error: chaptersError } = useSWR(
+    courseId ? url1 + courseId : null,
+    fetcher,
+  )
+  const url2 = process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL + '/courses/'
+  const { data: courseData, error: courseError } = useSWR(
+    courseId ? url2 + courseId : null,
+    fetcher,
+  )
+  if (chaptersError || courseError) return <Error />
+  if (!chaptersData || !courseData) return <Loading />
 
-  if (error) return <Error />
+  const chapters = chaptersData.contents
+  const course = courseData
+
   return (
     <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#fff2da' }}>
       <Typography
@@ -49,7 +62,7 @@ const Index: NextPage<SSRProps> = (props) => {
           lineHeight: 1.5,
         }}
       >
-        p5.js{courseId.name}
+        p5.js{course.name}
       </Typography>
       <Container maxWidth="lg" sx={{ pt: 2 }}>
         <Grid
@@ -61,7 +74,7 @@ const Index: NextPage<SSRProps> = (props) => {
         >
           {chapters.map((chapter: Chapter, i: number) => (
             <Grid key={i} item xs={12} md={4}>
-              <Link href={'/courses/' + courseId.id + '/' + chapter.id}>
+              <Link href={'/courses/' + courseId + '/' + chapter.id}>
                 {chapter.title}
               </Link>
             </Grid>
@@ -70,32 +83,6 @@ const Index: NextPage<SSRProps> = (props) => {
       </Container>
     </Box>
   )
-}
-
-export const getServerSideProps: GetServerSideProps<SSRProps> = async (
-  context,
-) => {
-  try {
-    const courseId = context.params!['courseId'] as string | undefined
-    const chapterData = await client.get({
-      endpoint: 'chapters',
-      queries: { offset: 0, filters: `courseId[equals]${courseId}` },
-    })
-    return {
-      props: {
-        chapters: chapterData.contents,
-        error: false,
-      },
-    }
-  } catch (error) {
-    console.error('データの取得に失敗しました:', error)
-    return {
-      props: {
-        chapters: [],
-        error: true,
-      },
-    }
-  }
 }
 
 export default Index
