@@ -1,27 +1,22 @@
 import { Box, Container, Typography, Card } from '@mui/material'
 import type { NextPage } from 'next'
-import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
 import Error from '@/components/Error'
+import Loading from '@/components/Loading'
 import MarkdownText from '@/components/MarkdownText'
 import { TableOfContents } from '@/components/TableOfContents'
-import { client } from '@/libs/client'
 import { renderToc } from '@/libs/render-toc'
+import { fetcher } from '@/utils'
 
-type Chapter = {
-  title: string
-  content: string
-  createdAt: string
-  updatedAt: string
-}
-
-type Props = {
-  chapter: Chapter
-  error: boolean
-}
-
-const ChapterDetail: NextPage<Props> = (props) => {
-  const { chapter, error } = props
+const ChapterDetail: NextPage = () => {
+  const router = useRouter()
+  const { id } = router.query
+  const url = process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL + '/chapters/'
+  const { data, error } = useSWR(id ? url + id : null, fetcher)
   if (error) return <Error />
+  if (!data) return <Loading />
+  const chapter = data
   const toc = renderToc(chapter.content)
 
   return (
@@ -113,29 +108,6 @@ const ChapterDetail: NextPage<Props> = (props) => {
       </Container>
     </Box>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const id = context.params!['id'] as string | undefined
-    const data = await client.get({ endpoint: 'chapters', contentId: id })
-
-    return {
-      props: {
-        chapter: data,
-        error: false,
-      },
-    }
-  } catch (error) {
-    console.error('データの取得に失敗しました:', error)
-    return {
-      props: {
-        chapter: [],
-        error: true,
-      },
-    }
-  }
-  // paramsがundifiedの可能性がある
 }
 
 export default ChapterDetail

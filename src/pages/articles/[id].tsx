@@ -11,12 +11,14 @@ import {
   ListItemText,
 } from '@mui/material'
 import type { NextPage } from 'next'
-import { GetStaticProps, GetStaticPaths } from 'next'
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
 import Error from '@/components/Error'
+import Loading from '@/components/Loading'
 import MarkdownText from '@/components/MarkdownText'
 import { TableOfContents } from '@/components/TableOfContents'
-import { client } from '@/libs/client'
 import { renderToc } from '@/libs/render-toc'
+import { fetcher } from '@/utils'
 
 type Article = {
   title: string
@@ -32,10 +34,6 @@ type Article = {
 type Props = {
   article: Article
   error: boolean
-}
-
-interface Content {
-  id: string
 }
 
 class DateStr {
@@ -54,9 +52,14 @@ class DateStr {
   }
 }
 
-const ArticleDetail: NextPage<Props> = (props) => {
-  const { article, error } = props
+const ArticleDetail: NextPage<Props> = () => {
+  const router = useRouter()
+  const url = process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL + '/articles/'
+  const { id } = router.query
+  const { data, error } = useSWR(id ? url + id : null, fetcher)
   if (error) return <Error />
+  if (!data) return <Loading />
+  const article = data
   const toc = renderToc(article.content)
   const createdDate = new DateStr(new Date(article.createdAt))
   const updatedDate = new DateStr(new Date(article.updatedAt))
@@ -226,41 +229,6 @@ const ArticleDetail: NextPage<Props> = (props) => {
       </Container>
     </Box>
   )
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await client.get<{ contents: Content[] }>({
-    endpoint: 'articles',
-  })
-
-  const paths = data.contents.map(
-    (content: Content) => `/articles/${content.id}`,
-  )
-  //paths以外は404
-  return { paths, fallback: false }
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  try {
-    const id = context.params!['id'] as string | undefined
-    const data = await client.get({ endpoint: 'articles', contentId: id })
-
-    return {
-      props: {
-        article: data,
-        error: false,
-      },
-    }
-  } catch (error) {
-    console.error('データの取得に失敗しました:', error)
-    return {
-      props: {
-        article: [],
-        error: true,
-      },
-    }
-  }
-  // paramsがundifiedの可能性がある
 }
 
 export default ArticleDetail

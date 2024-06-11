@@ -1,10 +1,11 @@
 import { Box, Grid, Container, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { GetServerSideProps } from 'next'
+import useSWR from 'swr'
 import CourseCard from '@/components/CourseCard'
 import Error from '@/components/Error'
-import { client } from '@/libs/client'
+import Loading from '@/components/Loading'
 import { styles } from '@/styles'
+import { fetcher } from '@/utils'
 
 type Course = {
   id: string
@@ -15,16 +16,18 @@ type Course = {
   }
 }
 
-type SSRProps = {
-  courses: Course[]
-  error: boolean
-}
-
 // 講座一覧画面
-const Index: NextPage<SSRProps> = (props) => {
-  const { courses, error } = props
+const Index: NextPage = () => {
+  const url =
+    process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL + '/courses?offset=0'
+
+  const { data, error } = useSWR(url, fetcher)
 
   if (error) return <Error />
+  if (!data) return <Loading />
+
+  const courses = data.contents
+
   return (
     <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#fff2da' }}>
       <Typography
@@ -63,29 +66,6 @@ const Index: NextPage<SSRProps> = (props) => {
       </Container>
     </Box>
   )
-}
-
-export const getServerSideProps: GetServerSideProps<SSRProps> = async () => {
-  try {
-    const data = await client.get({
-      endpoint: 'courses',
-      queries: { offset: 0 },
-    })
-    return {
-      props: {
-        courses: data.contents,
-        error: false,
-      },
-    }
-  } catch (error) {
-    console.error('データの取得に失敗しました:', error)
-    return {
-      props: {
-        courses: [],
-        error: true,
-      },
-    }
-  }
 }
 
 export default Index
