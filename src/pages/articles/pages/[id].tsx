@@ -9,7 +9,7 @@ import { styles } from '@/styles'
 import { PER_PAGE } from '@/utils/per_page'
 
 type Article = {
-  id: number
+  id: string
   title: string
   updatedAt: string
   eyecatch: {
@@ -36,16 +36,16 @@ const ArticlePageId: NextPage<Props> = (props) => {
 
   return (
     <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#fff2da' }}>
-      <Container maxWidth="lg" sx={{ pt: 6 }}>
+      <Container maxWidth="md" sx={{ pt: 6 }}>
         <Grid
           container
           direction="row"
           alignItems="center"
-          justifyContent="center"
+          justifyContent="flex-start"
           spacing={5}
         >
           {articles.map((article: Article, i: number) => (
-            <Grid key={i} item xs={12} md={4}>
+            <Grid key={i} item xs={12} md={6}>
               <Link href={'/articles/' + article.id}>
                 <ArticleCard
                   id={article.id}

@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 
 type ArticleCardProps = {
-  id: number
+  id: string
   title: string
   userName: string
   thumbnailUrl: string
@@ -41,7 +41,7 @@ const ArticleCard = (props: ArticleCardProps) => {
       >
         <CardMedia
           component="img"
-          height="180"
+          height="150"
           image={props.thumbnailUrl}
           alt={props.title}
           sx={{
@@ -53,13 +53,12 @@ const ArticleCard = (props: ArticleCardProps) => {
           }}
         />
       </Box>
-
       <CardContent>
         <Typography
           component="h3"
           sx={{
             mb: 2,
-            minHeight: 48,
+            minHeight: 36,
             fontSize: 22,
             fontWeight: 'bold',
             lineHeight: 1.5,

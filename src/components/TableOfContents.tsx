@@ -5,7 +5,6 @@ import TimelineDot from '@mui/lab/TimelineDot'
 import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem'
 import TimelineSeparator from '@mui/lab/TimelineSeparator'
 import React, { useEffect, useState } from 'react'
-
 type TableOfContentsProps = {
   toc: { id: string; text: string }[]
 }
