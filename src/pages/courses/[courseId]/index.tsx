@@ -1,7 +1,8 @@
 //選択した講座の詳細画面
 //章一覧が表示される
-import { Box, Grid, Container, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 import type { NextPage } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
@@ -29,57 +30,104 @@ type Chapter = {
 // 講座一覧画面
 const Index: NextPage = () => {
   const router = useRouter()
-  const url1 =
+  const url =
     process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL +
     '/chapters?filters=courseId[equals]'
   const { courseId } = router.query
-  const { data: chaptersData, error: chaptersError } = useSWR(
-    courseId ? url1 + courseId : null,
-    fetcher,
-  )
-  const url2 = process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL + '/courses/'
-  const { data: courseData, error: courseError } = useSWR(
-    courseId ? url2 + courseId : null,
-    fetcher,
-  )
-  if (chaptersError || courseError) return <Error />
-  if (!chaptersData || !courseData) return <Loading />
+  const { data, error } = useSWR(courseId ? url + courseId : null, fetcher)
 
-  const chapters = chaptersData.contents
-  const course = courseData
+  if (error) return <Error />
+  if (!data) return <Loading />
+
+  const chapters = data.contents
+  console.log(chapters)
+  const course = chapters[0].courseId
 
   return (
-    <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#fff2da' }}>
-      <Typography
-        component="h2"
+    <Box
+      css={styles.pageMinHeight}
+      sx={{
+        backgroundColor: 'white',
+      }}
+    >
+      <Box
         sx={{
+          backgroundColor: '#fff2da',
+          py: 5,
+          px: 20,
           color: '#54391f',
-          textAlign: 'center',
-          pt: 10,
-          mb: 4,
-          fontSize: 32,
-          fontWeight: 'bold',
-          lineHeight: 1.5,
+          display: 'flex',
+          justifyContent: 'space-between', // 横並びの要素間にスペースを均等に配置
+          alignItems: 'center', // 垂直方向に中央揃え
         }}
       >
-        p5.js{course.name}
-      </Typography>
-      <Container maxWidth="lg" sx={{ pt: 2 }}>
-        <Grid
-          container
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          spacing={5}
-        >
-          {chapters.map((chapter: Chapter, i: number) => (
-            <Grid key={i} item xs={12} md={4}>
-              <Link href={'/courses/' + courseId + '/' + chapter.id}>
+        <Box>
+          <Typography
+            component="h2"
+            sx={{
+              textAlign: 'left',
+              fontSize: 30,
+              fontWeight: 'bold',
+              lineHeight: 1.5,
+              mb: 2,
+            }}
+          >
+            p5.js開発コース{course.name}編
+          </Typography>
+          <Typography sx={{ fontWeight: 'bold', fontSize: 18 }}>
+            {course.subtitle}
+          </Typography>
+        </Box>
+        <Box>
+          <Image
+            alt="講座サムネイル画像"
+            src={course.thumbnail.url}
+            width={140}
+            height={95}
+            style={{
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // シャドウを追加
+              objectFit: 'cover', // 画像のフィット方法を設定
+            }}
+          />
+        </Box>
+      </Box>
+
+      <Container maxWidth="lg" sx={{ pt: 7 }}>
+        {chapters.map((chapter: Chapter, i: number) => (
+          <Link key={i} href={'/courses/' + courseId + '/' + chapter.id}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-start', // 横並びの要素間にスペースを均等に配置
+                alignItems: 'center', // 垂直方向に中央揃え
+                borderTop: 1,
+                py: 4,
+                borderBottom: i === chapters.length - 1 ? 1 : 0,
+                borderColor: 'grey.500',
+              }}
+            >
+              <Box>
+                <Typography
+                  sx={{
+                    backgroundColor: '#54391f',
+                    color: 'white',
+                    py: 1,
+                    px: 2,
+                    fontWeight: 'bold',
+                    mr: 5,
+                    borderRadius: 10,
+                  }}
+                >
+                  DAY{i + 1}
+                </Typography>
+              </Box>
+              <Typography sx={{ fontWeight: 'bold' }}>
                 {chapter.title}
-              </Link>
-            </Grid>
-          ))}
-        </Grid>
+              </Typography>
+            </Box>
+          </Link>
+        ))}
       </Container>
     </Box>
   )
