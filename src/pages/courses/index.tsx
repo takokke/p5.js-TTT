@@ -4,6 +4,7 @@ import useSWR from 'swr'
 import CourseCard from '@/components/CourseCard'
 import Error from '@/components/Error'
 import Loading from '@/components/Loading'
+import MuiBreadcrumbs from '@/components/MuiBreadcrumb'
 import { styles } from '@/styles'
 import { fetcher } from '@/utils'
 
@@ -29,21 +30,39 @@ const Index: NextPage = () => {
   const courses = data.contents
 
   return (
-    <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#fff2da' }}>
-      <Typography
-        component="h2"
+    <Box css={styles.pageMinHeight}>
+      <Box
         sx={{
+          backgroundColor: '#fff2da',
+          py: 5,
+          px: { md: 20, xs: 2 },
           color: '#54391f',
-          textAlign: 'center',
-          pt: 10,
-          mb: 4,
-          fontSize: 32,
-          fontWeight: 'bold',
-          lineHeight: 1.5,
+          display: 'flex',
+          justifyContent: 'space-between', // 横並びの要素間にスペースを均等に配置
+          alignItems: 'center', // 垂直方向に中央揃え
         }}
       >
-        学習講座
-      </Typography>
+        <Box sx={{ backgroundColor: '#fff2da' }}>
+          <Typography
+            component="h2"
+            sx={{
+              textAlign: { md: 'left' },
+              fontSize: { md: 30, xs: 18 },
+              fontWeight: 'bold',
+              lineHeight: 1.5,
+              mb: 2,
+            }}
+          >
+            学習コンテンツ一覧
+          </Typography>
+          <Typography sx={{ fontWeight: 'bold', fontSize: { md: 18, xs: 12 } }}>
+            チュートリアル形式でプログラミングを学ぼう
+          </Typography>
+        </Box>
+      </Box>
+      <Box sx={{ pl: { md: 17, sx: 0 }, py: 1, backgroundColor: 'white' }}>
+        <MuiBreadcrumbs />
+      </Box>
       <Container maxWidth="lg" sx={{ pt: 2 }}>
         <Grid
           container
