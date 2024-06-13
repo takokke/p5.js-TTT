@@ -1,10 +1,12 @@
 import { Box, Container, Typography, Card } from '@mui/material'
 import type { NextPage } from 'next'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Error from '@/components/Error'
 import Loading from '@/components/Loading'
 import MarkdownText from '@/components/MarkdownText'
+import MuiBreadcrumbs from '@/components/MuiBreadcrumb'
 import { TableOfContents } from '@/components/TableOfContents'
 import { renderToc } from '@/libs/render-toc'
 import { fetcher } from '@/utils'
@@ -18,7 +20,7 @@ const ChapterDetail: NextPage = () => {
   if (!data) return <Loading />
   const chapter = data
   const toc = renderToc(chapter.content)
-
+  const course = chapter.courseId
   return (
     <Box
       sx={{
@@ -27,6 +29,53 @@ const ChapterDetail: NextPage = () => {
         minHeight: 'calc(100vh - 57px)',
       }}
     >
+      <Box
+        sx={{
+          backgroundColor: '#fff2da',
+          py: 5,
+          px: { md: 20, xs: 2 },
+          color: '#54391f',
+          display: 'flex',
+          justifyContent: 'space-between', // 横並びの要素間にスペースを均等に配置
+          alignItems: 'center', // 垂直方向に中央揃え
+        }}
+      >
+        <Box>
+          <Typography
+            component="h2"
+            sx={{
+              textAlign: { md: 'left' },
+              fontSize: { md: 30, xs: 18 },
+              fontWeight: 'bold',
+              lineHeight: 1.5,
+              mb: 2,
+            }}
+          >
+            p5.js開発コース{course.name}編
+          </Typography>
+          <Typography sx={{ fontWeight: 'bold', fontSize: { md: 18, xs: 12 } }}>
+            {course.subtitle}
+          </Typography>
+        </Box>
+        <Box>
+          <Image
+            alt="講座サムネイル画像"
+            src={course.thumbnail.url}
+            width={140}
+            height={95}
+            layout="responsive"
+            sizes="(max-width: 400px) 33vw, (max-width: 1000px) 25vw, 15vw"
+            style={{
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // シャドウを追加
+              objectFit: 'cover', // 画像のフィット方法を設定
+            }}
+          />
+        </Box>
+      </Box>
+      <Box sx={{ pl: { md: 17, sx: 0 }, py: 1, backgroundColor: 'white' }}>
+        <MuiBreadcrumbs />
+      </Box>
       <Box
         sx={{
           display: { xs: 'flex', lg: 'none' },

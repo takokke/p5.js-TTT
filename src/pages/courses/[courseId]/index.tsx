@@ -8,9 +8,9 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Error from '@/components/Error'
 import Loading from '@/components/Loading'
+import MuiBreadcrumbs from '@/components/MuiBreadcrumb'
 import { styles } from '@/styles'
 import { fetcher } from '@/utils'
-
 type Course = {
   id: string
   name: string
@@ -40,7 +40,6 @@ const Index: NextPage = () => {
   if (!data) return <Loading />
 
   const chapters = data.contents
-  console.log(chapters)
   const course = chapters[0].courseId
 
   return (
@@ -54,7 +53,7 @@ const Index: NextPage = () => {
         sx={{
           backgroundColor: '#fff2da',
           py: 5,
-          px: 20,
+          px: { md: 20, xs: 2 },
           color: '#54391f',
           display: 'flex',
           justifyContent: 'space-between', // 横並びの要素間にスペースを均等に配置
@@ -65,8 +64,8 @@ const Index: NextPage = () => {
           <Typography
             component="h2"
             sx={{
-              textAlign: 'left',
-              fontSize: 30,
+              textAlign: { md: 'left' },
+              fontSize: { md: 30, xs: 18 },
               fontWeight: 'bold',
               lineHeight: 1.5,
               mb: 2,
@@ -74,7 +73,7 @@ const Index: NextPage = () => {
           >
             p5.js開発コース{course.name}編
           </Typography>
-          <Typography sx={{ fontWeight: 'bold', fontSize: 18 }}>
+          <Typography sx={{ fontWeight: 'bold', fontSize: { md: 18, xs: 12 } }}>
             {course.subtitle}
           </Typography>
         </Box>
@@ -84,6 +83,8 @@ const Index: NextPage = () => {
             src={course.thumbnail.url}
             width={140}
             height={95}
+            layout="responsive"
+            sizes="(max-width: 400px) 33vw, (max-width: 1000px) 25vw, 15vw"
             style={{
               borderRadius: '8px',
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // シャドウを追加
@@ -92,7 +93,9 @@ const Index: NextPage = () => {
           />
         </Box>
       </Box>
-
+      <Box sx={{ pl: { md: 17, sx: 0 }, py: 1, backgroundColor: 'white' }}>
+        <MuiBreadcrumbs />
+      </Box>
       <Container maxWidth="lg" sx={{ pt: 7 }}>
         {chapters.map((chapter: Chapter, i: number) => (
           <Link key={i} href={'/courses/' + courseId + '/' + chapter.id}>

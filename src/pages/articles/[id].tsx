@@ -1,7 +1,10 @@
 import ArticleIcon from '@mui/icons-material/Article'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import PersonIcon from '@mui/icons-material/Person'
 import UpdateIcon from '@mui/icons-material/Update'
 import {
+  Avatar,
+  Tooltip,
   Box,
   Container,
   Typography,
@@ -9,8 +12,10 @@ import {
   List,
   ListItem,
   ListItemText,
+  IconButton,
 } from '@mui/material'
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Error from '@/components/Error'
@@ -19,7 +24,6 @@ import MarkdownText from '@/components/MarkdownText'
 import { TableOfContents } from '@/components/TableOfContents'
 import { renderToc } from '@/libs/render-toc'
 import { fetcher } from '@/utils'
-
 type Article = {
   title: string
   content: string
@@ -95,6 +99,17 @@ const ArticleDetail: NextPage<Props> = () => {
       </Box>
       <Container maxWidth="lg">
         <Box sx={{ pt: 6, pb: 3 }}>
+          <Box sx={{ width: 40, height: 40 }}>
+            <Link href={'/articles/pages/1'}>
+              <Avatar>
+                <Tooltip title="記事の管理に戻る">
+                  <IconButton sx={{ backgroundColor: '#DDDDDD' }}>
+                    <ChevronLeftIcon sx={{ color: '#99AAB6' }} />
+                  </IconButton>
+                </Tooltip>
+              </Avatar>
+            </Link>
+          </Box>
           <Box sx={{ maxWidth: 840, m: 'auto', textAlign: 'center' }}>
             <Typography
               component="h2"
