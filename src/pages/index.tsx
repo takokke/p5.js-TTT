@@ -78,10 +78,7 @@ const Index: NextPage = () => {
             ))}
           </Grid>
           <Box sx={{ display: 'flex', justifyContent: 'center', pt: 6 }}>
-            <StyledLink
-              href="/articles/pages/1"
-              message=" 作品をもっと探す➡️"
-            />
+            <StyledLink href="/articles" message=" 作品をもっと探す➡️" />
           </Box>
         </Container>
       </Box>
