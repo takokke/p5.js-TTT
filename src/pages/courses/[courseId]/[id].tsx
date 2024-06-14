@@ -11,6 +11,22 @@ import { TableOfContents } from '@/components/TableOfContents'
 import { renderToc } from '@/libs/render-toc'
 import { fetcher } from '@/utils'
 
+class DateStr {
+  created_at: Date
+
+  constructor(date: Date) {
+    this.created_at = date
+  }
+
+  formatDate(): string {
+    const year = this.created_at.getFullYear()
+    const month = ('0' + (this.created_at.getMonth() + 1)).slice(-2)
+    const day = ('0' + this.created_at.getDate()).slice(-2)
+
+    return `${year}/${month}/${day}`
+  }
+}
+
 const ChapterDetail: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
@@ -21,6 +37,8 @@ const ChapterDetail: NextPage = () => {
   const chapter = data
   const toc = renderToc(chapter.content)
   const course = chapter.courseId
+  const createdDate = new DateStr(new Date(chapter.createdAt))
+
   return (
     <Box
       sx={{
@@ -112,7 +130,7 @@ const ChapterDetail: NextPage = () => {
               mt: '20px',
             }}
           >
-            {chapter.createdAt}に公開
+            {createdDate.formatDate()}に公開
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '0 24px' }}>

@@ -15,6 +15,18 @@ const StyledLink = styled('a')({
   },
 })
 
+const pageNames: Record<string, string> = {
+  home: 'ホーム',
+  courses: '講座',
+  articles: '記事',
+  'js-course': 'javascriptコース',
+  'p5js-course': 'p5.jsコース',
+  operator: '演算子',
+  string: '文字列',
+  variable: '変数',
+  array: '配列',
+}
+
 const MuiBreadcrumbs = () => {
   const router = useRouter()
   const pathSegments = router.asPath.split('/').filter((segment) => segment)
@@ -22,14 +34,14 @@ const MuiBreadcrumbs = () => {
   const createBreadcrumb = (segment: string, index: number) => {
     const href = '/' + pathSegments.slice(0, index + 1).join('/')
     const isLast = index === pathSegments.length - 1
-
+    const name = pageNames[segment] || segment
     return isLast ? (
       <Typography key={href} color="text.primary">
-        {segment}
+        {name}
       </Typography>
     ) : (
       <Link key={href} href={href} passHref>
-        <StyledLink>{segment}</StyledLink>
+        <StyledLink>{name}</StyledLink>
       </Link>
     )
   }
@@ -39,7 +51,7 @@ const MuiBreadcrumbs = () => {
       <Link href="/" passHref>
         <StyledLink>
           <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-          Home
+          {pageNames.home}
         </StyledLink>
       </Link>
       {pathSegments.map(createBreadcrumb)}

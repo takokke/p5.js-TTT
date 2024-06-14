@@ -15,7 +15,6 @@ import {
   IconButton,
 } from '@mui/material'
 import type { NextPage } from 'next'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Error from '@/components/Error'
@@ -24,6 +23,7 @@ import MarkdownText from '@/components/MarkdownText'
 import { TableOfContents } from '@/components/TableOfContents'
 import { renderToc } from '@/libs/render-toc'
 import { fetcher } from '@/utils'
+
 type Article = {
   title: string
   content: string
@@ -100,15 +100,21 @@ const ArticleDetail: NextPage<Props> = () => {
       <Container maxWidth="lg">
         <Box sx={{ pt: 6, pb: 3 }}>
           <Box sx={{ width: 40, height: 40 }}>
-            <Link href={'/articles/pages/1'}>
+            <a
+              onClick={(e) => {
+                e.preventDefault() // デフォルトのリンク動作を防止
+                router.back()
+              }}
+              style={{ cursor: 'pointer', textDecoration: 'none' }}
+            >
               <Avatar>
-                <Tooltip title="記事の管理に戻る">
+                <Tooltip title="前のページに戻る">
                   <IconButton sx={{ backgroundColor: '#DDDDDD' }}>
                     <ChevronLeftIcon sx={{ color: '#99AAB6' }} />
                   </IconButton>
                 </Tooltip>
               </Avatar>
-            </Link>
+            </a>
           </Box>
           <Box sx={{ maxWidth: 840, m: 'auto', textAlign: 'center' }}>
             <Typography
@@ -133,7 +139,7 @@ const ArticleDetail: NextPage<Props> = () => {
               mt: '20px',
             }}
           >
-            {article.createdAt}に公開
+            {createdDate.formatDate()}に公開
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '0 24px' }}>
