@@ -28,3 +28,25 @@ p5.js教材サイトのフロントエンドリポジトリです
 
 **次の予定**
 - テキスト記事を種類ごとに分ける
+
+## docker composeコマンド
+
+Dockerfileからイメージの作成
+```shell
+docker compose build --no-cache
+```
+
+イメージをもとにコンテナを起動
+```shell
+docker compose up -d
+```
+
+nextコンテナに入る
+```shell
+docker compose exec next /bin/bash
+```
+
+コンテナの停止
+```shell
+docker compose down
+```
