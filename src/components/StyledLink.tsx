@@ -13,12 +13,12 @@ const StyledLink = (props: StyledLinkProps) => {
       href={href}
       component={NextLink}
       sx={{
-        color: '#54391f',
+        color: '#4c4c4c',
         textDecoration: 'none',
         py: 1,
         px: 3,
         '&:hover': {
-          background: 'rgba(181, 146, 89, 0.2)',
+          background: 'rgba(0, 0, 0, 0.1)',
           borderRadius: 25,
         },
       }}

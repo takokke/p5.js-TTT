@@ -5,6 +5,7 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import '@/styles/destyle.css'
 import * as React from 'react'
+import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import createEmotionCache from '@/styles/createEmotionCache'
 import theme from '@/styles/theme'
@@ -27,6 +28,7 @@ export default function MyApp(props: MyAppProps): JSX.Element {
         <CssBaseline />
         <Header />
         <Component {...pageProps} />
+        <Footer />
       </ThemeProvider>
     </CacheProvider>
   )

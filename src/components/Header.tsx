@@ -30,7 +30,7 @@ const Header = () => {
           <Box>
             <Link href="/">
               <Image
-                src="/logo_transparent.png"
+                src="/logo.png"
                 priority
                 width={120}
                 height={60}

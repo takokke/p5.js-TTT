@@ -32,7 +32,14 @@ const getDaysAgo = (updatedAt: string) => {
 const ArticleCard = (props: ArticleCardProps) => {
   const daysAgo = getDaysAgo(props.updatedAt)
   return (
-    <Card sx={{ borderRadius: '4px', color: '#54391f', overflow: 'hidden' }}>
+    <Card
+      sx={{
+        borderRadius: '4px',
+        color: '#54391f',
+        overflow: 'hidden',
+        boxShadow: '0px 0px 34px 4px #e0e0e0',
+      }}
+    >
       <Box
         sx={{
           position: 'relative',
@@ -41,7 +48,7 @@ const ArticleCard = (props: ArticleCardProps) => {
       >
         <CardMedia
           component="img"
-          height="150"
+          height="200"
           image={props.thumbnailUrl}
           alt={props.title}
           sx={{
