@@ -47,6 +47,7 @@ const Index: NextPage = () => {
       css={styles.pageMinHeight}
       sx={{
         backgroundColor: 'white',
+        pb: 10,
       }}
     >
       <Box

@@ -24,7 +24,7 @@ const CourseCard = (props: CourseCardProps) => {
         borderRadius: '4px',
         color: '#54391f',
         overflow: 'hidden',
-        boxShadow: 3,
+        boxShadow: '0px 0px 34px 4px #e0e0e0',
       }}
     >
       <Box>

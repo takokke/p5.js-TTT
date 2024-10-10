@@ -31,11 +31,12 @@ type Course = {
 }
 
 const Index: NextPage = () => {
+  // 記事の取得URL
   const url1 =
-    process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL +
-    '/articles?offset=0,limit=10'
+    process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL + '/articles?offset=0&limit=3'
   const { data: articlesData, error: articlesError } = useSWR(url1, fetcher)
 
+  // 講座の取得URL
   const url2 =
     process.env.NEXT_PUBLIC_MICROCMS_API_BASE_URL + '/courses?offset=0,limit=10'
   const { data: coursesData, error: coursesError } = useSWR(url2, fetcher)
@@ -47,9 +48,9 @@ const Index: NextPage = () => {
   const courses = coursesData.contents
 
   return (
-    <Box css={styles.pageMinHeight}>
-      <Box sx={{ backgroundColor: '#fff2da' }}>
-        <Container maxWidth="md" sx={{ py: 3 }}>
+    <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#fff2da' }}>
+      <Box>
+        <Container maxWidth="lg" sx={{ py: 10 }}>
           <Typography
             component="h2"
             sx={{ color: '#54391f', fontSize: 32, fontWeight: 'bold', mb: 4 }}
@@ -64,7 +65,7 @@ const Index: NextPage = () => {
             spacing={5}
           >
             {articles.map((article: Article, i: number) => (
-              <Grid key={i} item xs={12} md={6}>
+              <Grid key={i} item xs={12} md={4}>
                 <Link href={'/articles/' + article.id}>
                   <ArticleCard
                     id={article.id}
@@ -82,8 +83,8 @@ const Index: NextPage = () => {
           </Box>
         </Container>
       </Box>
-      <Box sx={{ backgroundColor: 'white' }}>
-        <Container maxWidth="md" sx={{ py: 3 }}>
+      <Box>
+        <Container maxWidth="lg" sx={{ py: 3 }}>
           <Typography
             component="h2"
             sx={{ color: '#54391f', fontSize: 32, fontWeight: 'bold', pb: 4 }}
