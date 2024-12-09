@@ -13,8 +13,8 @@ type TableOfContentsProps = {
 export const TableOfContents = (props: TableOfContentsProps) => {
   const { toc } = props
   const [activeId, setActiveId] = useState<string | null>(null)
-
   //見出しと目次の連携、強調
+  //jsのapi IntersectionObserverを使用
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
