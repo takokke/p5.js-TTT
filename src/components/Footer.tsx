@@ -32,7 +32,9 @@ export default function Footer() {
               のためのp5.js教材
             </Typography>
           </Box>
-          <Box sx={{ flex: '8' }}>右側のリンク集</Box>
+          <Box sx={{ flex: '8' }}>
+            右側のリンク集、TTTのサイトのリンク、Scratchの教材リンク
+          </Box>
         </Box>
       </Container>
     </AppBar>
