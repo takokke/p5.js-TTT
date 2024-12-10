@@ -1,4 +1,11 @@
-import { Container, AppBar, Box, Typography } from '@mui/material'
+import {
+  Container,
+  AppBar,
+  Box,
+  Typography,
+  List,
+  ListItem,
+} from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -32,8 +39,30 @@ export default function Footer() {
               のためのp5.js教材
             </Typography>
           </Box>
-          <Box sx={{ flex: '8' }}>
-            右側のリンク集、TTTのサイトのリンク、Scratchの教材リンク
+          <Box sx={{ flex: '8', color: 'rgb(84, 57, 31)' }}>
+            <List>
+              <ListItem component="h4" sx={{ fontWeight: 'bold' }}>
+                About
+              </ListItem>
+              <ListItem sx={{ '&:hover': { textDecoration: 'underline' } }}>
+                <Link
+                  href="https://tinytech.jp/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  TTTこどもプログラミング教室
+                </Link>
+              </ListItem>
+              <ListItem sx={{ '&:hover': { textDecoration: 'underline' } }}>
+                <Link
+                  href="https://www.reptiles.co.jp/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  運営会社
+                </Link>
+              </ListItem>
+            </List>
           </Box>
         </Box>
       </Container>
