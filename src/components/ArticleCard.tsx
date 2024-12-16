@@ -34,9 +34,9 @@ const getDaysAgo = (updatedAt: string) => {
 const ArticleCard = (props: ArticleCardProps) => {
   const daysAgo = getDaysAgo(props.updatedAt)
 
-  // テーマとメディアクエリ
+  // ブレークポイントヘルパー
   const theme = useTheme()
-  // 1200px
+  // 1280px以下
   const isTabletOrBelow = useMediaQuery(theme.breakpoints.down('lg'))
   // 省略する文字数をレスポンシブの対応させる
   const titleLength = isTabletOrBelow ? 12 : 45
