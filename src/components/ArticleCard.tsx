@@ -7,6 +7,8 @@ import {
   CardMedia,
   IconButton,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 
 type ArticleCardProps = {
@@ -31,6 +33,14 @@ const getDaysAgo = (updatedAt: string) => {
 
 const ArticleCard = (props: ArticleCardProps) => {
   const daysAgo = getDaysAgo(props.updatedAt)
+
+  // ブレークポイントヘルパー
+  const theme = useTheme()
+  // 1280px以下
+  const isTabletOrBelow = useMediaQuery(theme.breakpoints.down('lg'))
+  // 省略する文字数をレスポンシブの対応させる
+  const titleLength = isTabletOrBelow ? 12 : 45
+
   return (
     <Card
       sx={{
@@ -71,7 +81,7 @@ const ArticleCard = (props: ArticleCardProps) => {
             lineHeight: 1.5,
           }}
         >
-          {omit(props.title)(45)('...')}
+          {omit(props.title)(titleLength)('...')}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography sx={{ fontSize: 12 }}>
