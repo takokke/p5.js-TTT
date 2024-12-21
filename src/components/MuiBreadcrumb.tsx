@@ -15,6 +15,8 @@ const StyledLink = styled('a')({
   },
 })
 
+// ページの名前
+// "-"はシングルクォーテーションで囲む。
 const pageNames: Record<string, string> = {
   home: 'ホーム',
   courses: '講座',
@@ -25,6 +27,12 @@ const pageNames: Record<string, string> = {
   string: '文字列',
   variable: '変数',
   array: '配列',
+  loop: 'ループ',
+  condition: '条件式',
+  'standard-io': '標準入力・出力',
+  class: 'クラス',
+  first: 'p5.jsをはじめよう（１）',
+  second: 'p5.jsをはじめよう（２）',
 }
 
 const MuiBreadcrumbs = () => {
